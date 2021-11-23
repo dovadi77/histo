@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.index', ['users' => User::all(['id as ID', 'name', 'email', 'mobile', 'created_at as created', 'updated_at as last update'])->toArray()]);
     }
 
     /**

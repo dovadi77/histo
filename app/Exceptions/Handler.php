@@ -40,9 +40,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (Throwable $e, $request) {
+            if ($request->is('api/*')) {
+                return $this->handleAPIError($request, $e);
+            }
+        });
     }
 
-    public function render($request, Throwable $exception)
+    private function handleAPIError($request, Throwable $exception)
     {
         if ($exception instanceof NotFoundHttpException) {
             return response()->json(['success' => false, 'message' => 'Route not found !'], 404);
@@ -51,7 +57,7 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof AuthenticationException) {
             return redirect(route('api.unauthorized'));
         }
-        $response = env('APP_ENV') == 'development' ? ['error' => $exception->getMessage(), 'file' => $exception->getFile(), 'line' => $exception->getLine(), 'full' => $exception] : [];
+        $response = env('APP_ENV') == 'local' ? ['error' => $exception->getMessage(), 'file' => $exception->getFile(), 'line' => $exception->getLine(), 'full' => $exception] : [];
         return response()->json(array_merge(['success' => false, 'message' => 'Terjadi Kesalahan pada Sistem !'], $response), 500);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\User as DataUser;
+use App\Http\Resources\ArrayConverter;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->sendResponse('Berhasil mengambil data', new DataUser(User::all()));
+        return $this->sendResponse('Berhasil mengambil data', new ArrayConverter(User::all()));
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\User as DataUser;
+use App\Http\Resources\ArrayConverter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $data = [
                 'token' => $user->createToken($user->name)->plainTextToken,
-                'user' => new DataUser($user)
+                'user' => new ArrayConverter($user)
             ];
             return $this->sendResponse('Login sukses !', $data);
         }
@@ -62,11 +62,11 @@ class AuthController extends Controller
             $user = User::create($input);
             $data = [
                 'token' => $user->createToken($user->name)->plainTextToken,
-                'user' => new DataUser($user)
+                'user' => new ArrayConverter($user)
             ];
             return $this->sendResponse('User berhasil ter-registrasi', $data);
         } catch (\Throwable $th) {
-            return $this->sendError('Terjadi kesalahan pada sistem !', env('APP_ENV') == 'development' ? $th->getMessage() : [], 500);
+            return $this->sendError('Terjadi kesalahan pada sistem !', env('APP_ENV') == 'local' ? $th->getMessage() : [], 500);
         }
     }
 
