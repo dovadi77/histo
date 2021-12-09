@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\AchievementController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\MaterialController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,21 +18,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::group(['prefix' => '/v1'], function () {
-    Route::prefix('user')->group(function () {
-        Route::post('/register', [\App\Http\Controllers\API\AuthController::class, 'register'])->name('api.user.register');
-        Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'login'])->name('api.user.login');
+Route::group(['prefix' => '/v1', 'as' => 'api.'], function () {
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::post('/register', [AuthController::class, 'register'])->name('register');
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::middleware(['auth:sanctum'])->group(function () {
-            Route::get('/all', [\App\Http\Controllers\API\UserController::class, 'index'])->name('api.user.all');
+            Route::get('/me', [UserController::class, 'index'])->name('detail');
         });
     });
-});
+    Route::group(['prefix' => 'achievement', 'as' => 'achievement.'], function () {
+        Route::get('/{id}', [AchievementController::class, 'show'])->name('detail');
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::post('', [UserController::class, 'storeAchievement'])->name('store');
+        });
+    });
+    Route::group(['prefix' => 'material', 'as' => 'material.'], function () {
+        Route::get('', [MaterialController::class, 'index'])->name('index');
+        Route::get('/{id}', [MaterialController::class, 'show'])->name('detail');
+        Route::group(['prefix' => 'quiz', 'as' => 'quiz.'], function () {
+        });
+    });
 
-// default unauthorized
-Route::get('unauthorized', function () {
-    return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
-})->name('api.unauthorized');
+    // default unauthorized
+    Route::get('unauthorized', function () {
+        return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+    })->name('unauthorized');
+});

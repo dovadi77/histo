@@ -1,4 +1,4 @@
-@extends('assets.error-layout')
+@extends('layout.error-layout')
 
 @section('title', __('Not Found'))
 @section('code', '404')

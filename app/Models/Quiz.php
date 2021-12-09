@@ -10,6 +10,13 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = ['material_id', 'title', 'content', 'answer'];
+
     public function getCreatedAtAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])->format('Y-m-d H:i:s');

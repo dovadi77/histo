@@ -1,4 +1,4 @@
-@extends('assets.error-layout')
+@extends('layout.error-layout')
 
 @section('title', __('Server Error'))
 @section('code', '500')

@@ -1,4 +1,4 @@
-@extends('assets.error-layout')
+@extends('layout.error-layout')
 
 @section('title', __('Forbidden'))
 @section('code', '403')

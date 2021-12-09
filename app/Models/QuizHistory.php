@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class QuizHistory extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,7 @@ class Material extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['title', 'content', 'header_image'];
-
+    protected $fillable = ['user_id', 'quiz_id', 'user_answer', 'score'];
 
     public function getCreatedAtAttribute()
     {

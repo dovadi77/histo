@@ -14,17 +14,5 @@ const path = require("path");
 
 mix.sass("resources/sass/app.scss", "public/css")
     .postCss("resources/css/sb-admin.css", "public/css/style.css")
-    .webpackConfig({
-        entry: {
-            app: "./resources/js/app.js",
-            datatables: "./resources/js/datatables.js",
-        },
-        output: {
-            path: path.resolve(__dirname, "public"),
-            filename: "js/[name].js",
-            library: {
-                type: "umd",
-                name: "DataTable",
-            },
-        },
-    });
+    .postCss("resources/css/auth.css", "public/css/auth.css")
+    .js("resources/js/app.js", "public/js");

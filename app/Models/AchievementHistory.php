@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class AchievementHistory extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,17 @@ class Material extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['title', 'content', 'header_image'];
+    protected $fillable = ['user_id', 'achievement_id'];
 
+    public function achievement()
+    {
+        return $this->belongsTo(Achievement::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function getCreatedAtAttribute()
     {

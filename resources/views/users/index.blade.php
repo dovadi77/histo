@@ -1,4 +1,4 @@
-@extends('assets.layout')
+@extends('layout.main')
 @section('title')
     <x-title title="List Users" />
 @endsection

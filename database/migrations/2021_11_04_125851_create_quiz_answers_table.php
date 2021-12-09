@@ -15,8 +15,8 @@ class CreateQuizAnswersTable extends Migration
     {
         Schema::create('quiz_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('quiz_id')->references('id')->on('quiz');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('quiz_id')->references('id')->on('quiz')->onUpdate('cascade')->onDelete('cascade');
             $table->text('user_answer');
             $table->integer('score');
             $table->timestamps();

@@ -15,8 +15,8 @@ class CreateGameAnswersTable extends Migration
     {
         Schema::create('game_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('game_id')->references('id')->on('games');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('game_id')->references('id')->on('games')->onUpdate('cascade')->onDelete('cascade');
             $table->text('user_answer');
             $table->bigInteger('user_time');
             $table->integer('score');
