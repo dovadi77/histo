@@ -65,7 +65,7 @@ class Controller extends BaseController
             $ext = str_replace('image/', '', $input[$image]->getClientMimeType());
 
             // create name
-            $random = md5($input['name'] . Str::random(10));
+            $random = md5($input['name'] ?? $input['username'] . Str::random(10));
             $imgName = $random . "." . $ext;
 
             // upload file to storage
@@ -76,7 +76,7 @@ class Controller extends BaseController
             $input[$image] = env('APP_URL') . '/storage/' . $path . $imgName;
         } else if ($path == 'users/') {
             $color = ['f39c12', '6ab04c', 'ff6b6b', 'd06224', '2c272e', 'b983ff', '544179', 'e26a2c', '191a19', '6c4a4a'];
-            $input[$image] = 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $input['name']) . '&background=' . $color[rand(0, 9)] . '&color=fff&size=128';
+            $input[$image] = 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $input['name'] ?? $input['username']) . '&background=' . $color[rand(0, 9)] . '&color=fff&size=128';
         }
         return $input;
     }

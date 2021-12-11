@@ -43,7 +43,8 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'nullable',
+            'username' => 'required|alpha_num|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'mobile' => ['numeric', 'nullable', 'regex:/(^628|^08)/m'],
@@ -53,21 +54,17 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Cek data anda!', $validator->errors(), 406);
         }
-        try {
-            $input = $request->all();
-            $input['password'] = Hash::make($input['password']);
-            // save profile picture
-            $input = $this->save_image($input, 'image', 'users/');
-            // save input
-            $user = User::create($input);
-            $data = [
-                'token' => $user->createToken($user->name)->plainTextToken,
-                'user' => new ArrayConverter($user)
-            ];
-            return $this->sendResponse('User berhasil ter-registrasi', $data);
-        } catch (\Throwable $th) {
-            return $this->sendError('Terjadi kesalahan pada sistem !', env('APP_ENV') == 'local' ? $th->getMessage() : [], 500);
-        }
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        // save profile picture
+        $input = $this->save_image($input, 'image', 'users/');
+        // save input
+        $user = User::create($input);
+        $data = [
+            'token' => $user->createToken($user->username)->plainTextToken,
+            'user' => new ArrayConverter($user)
+        ];
+        return $this->sendResponse('User berhasil ter-registrasi', $data);
     }
 
     /**

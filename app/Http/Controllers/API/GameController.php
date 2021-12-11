@@ -12,7 +12,7 @@ class GameController extends Controller
     public function leaderboard(Request $request, $game)
     {
         $order = Game::find($game)->type == 'puzzle' ? 'user_time' : 'score';
-        return $this->paginate($request, GameAnswer::where('game_id', $game)->orderBy($order, 'DESC')->with('user:id,name'));
+        return $this->paginate($request, GameAnswer::where('game_id', $game)->orderBy($order, 'DESC')->with('user:id,name,username'));
     }
 
     public function index(Request $request)
