@@ -15,7 +15,7 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexMaterial($material)
+    public function index($material)
     {
         $data = Quiz::where('material_id', $material)->with(['answers' => function ($q) {
             return $q->where('user_id', auth()->user()->id)->first();
@@ -23,8 +23,12 @@ class QuizController extends Controller
             ->first();
         if ($data) {
             if ($data['type'] == 'multiple') {
-                $arr = explode(';', $data['content']);
-                $data['content'] = ['question' => $arr[0], 'choices' => array_slice($arr, 1, count($arr))];
+                $questions = explode('|', $data['content']);
+                foreach ($questions as $i => $q) {
+                    $arr = explode(';', $q);
+                    $questions[$i] = ['question' => $arr[0], 'choices' => array_slice($arr, 1, count($arr))];
+                }
+                $data['content'] = $questions;
             }
             $data['user_answer'] = $data['answers'][0] ?? null;
             unset($data['answers']);
@@ -39,7 +43,7 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeMaterial(Request $request)
+    public function store(Request $request)
     {
         $data = $this->validationInput($request->all(), [
             'quiz_id' => 'required|exists:quiz,id',
@@ -69,7 +73,7 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateMaterial(Request $request)
+    public function update(Request $request)
     {
         $data = $this->validationInput($request->all(), [
             'quiz_id' => 'required|exists:quiz,id',
@@ -93,48 +97,14 @@ class QuizController extends Controller
         return $this->sendResponse('Berhasil !', $res);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     function calculateScore($data)
     {
         $quiz = Quiz::find($data['quiz_id']);
         if ($quiz['type'] == 'voice') {
-            $quizAnswers = explode(' ', $quiz->answer);
+            $answers = explode(' ', $quiz->answer);
             $userAnswers = explode(' ', $data['user_answer']);
             $correctWord = 0;
-            foreach ($quizAnswers as $key => $val) {
+            foreach ($answers as $key => $val) {
                 try {
                     $userAnswer = $userAnswers[$key];
                     $val = preg_replace('/[[:punct:]]/', '', $val);
@@ -145,8 +115,15 @@ class QuizController extends Controller
                     continue;
                 }
             }
-            return ceil(($correctWord / count($quizAnswers)) * 100);
+            return ceil(($correctWord / count($answers)) * 100);
         }
-        return $data['user_answer'] == $quiz['answer'] ? 100 : 0;
+        $userAnswers = explode(',', $data['user_answer']);
+        $answers = explode(',', $quiz->answer);
+        $correctAns = 0;
+        foreach ($answers as $key => $val) {
+            if ($val == $userAnswers[$key])
+                $correctAns++;
+        }
+        return ceil(($correctAns / count($answers)) * 100);
     }
 }

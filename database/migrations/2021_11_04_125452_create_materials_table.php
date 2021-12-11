@@ -15,9 +15,10 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
+            $table->text('banner');
             $table->string('title');
             $table->longText('content');
-            $table->text('header_image');
+            $table->text('header');
             $table->timestamps();
             $table->softDeletes();
         });

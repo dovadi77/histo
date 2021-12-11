@@ -15,13 +15,13 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->text('banner');
             $table->string('title');
             $table->text('content');
             $table->enum('contest', ['single', 'versus']);
-            $table->enum('type', ['puzzle', 'speech']);
+            $table->enum('type', ['puzzle', 'voice', 'multiple']);
             $table->bigInteger('max_time');
             $table->text('answer');
-            $table->integer('score');
             $table->timestamps();
             $table->softDeletes();
         });

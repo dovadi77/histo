@@ -15,7 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
         \App\Models\Achievement::factory(10)->create();
-        \App\Models\Material::factory(10)->create();
-        \App\Models\Quiz::factory(10)->create();
+        $materials = \App\Models\Material::factory(10)->create();
+        $materials->each(function ($m) {
+            \App\Models\Quiz::factory()->create(['material_id' => $m->id]);
+        });
+        \App\Models\Game::factory(10)->create();
     }
 }

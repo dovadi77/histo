@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AchievementController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\GameController;
 use App\Http\Controllers\API\MaterialController;
 use App\Http\Controllers\API\QuizController;
 use App\Http\Controllers\API\UserController;
@@ -37,9 +38,18 @@ Route::group(['prefix' => '/v1', 'as' => 'api.'], function () {
         Route::get('', [MaterialController::class, 'index'])->name('index');
         Route::get('/{id}', [MaterialController::class, 'show'])->name('detail');
         Route::middleware(['auth:sanctum'])->group(function () {
-            Route::get('/{material}/quiz', [QuizController::class, 'indexMaterial'])->name('quiz.index');
-            Route::post('/{material}/quiz', [QuizController::class, 'storeMaterial'])->name('quiz.answer');
-            Route::put('/{material}/quiz', [QuizController::class, 'updateMaterial'])->name('quiz.answer.update');
+            Route::get('/{material}/quiz', [QuizController::class, 'index'])->name('quiz.index');
+            Route::post('/{material}/quiz', [QuizController::class, 'store'])->name('quiz.answer');
+            Route::put('/{material}/quiz', [QuizController::class, 'update'])->name('quiz.answer.update');
+        });
+    });
+
+    Route::group(['prefix' => 'game', 'as' => 'game.'], function () {
+        Route::get('/', [GameController::class, 'index'])->name('index');
+        Route::get('/{game}/leaderboard', [GameController::class, 'leaderboard'])->name('leaderboard');
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get('/{game}', [GameController::class, 'show'])->name('detail');
+            Route::post('/{game}', [GameController::class, 'store'])->name('answer');
         });
     });
 

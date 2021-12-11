@@ -22,7 +22,8 @@ class MaterialFactory extends Factory
         return [
             'title' => $title,
             'content' => $post,
-            'header_image' => $this->faker->imageUrl(800, 600, 'cats', true)
+            'header' => $this->faker->imageUrl(800, 600, 'cats', true),
+            'banner' => $this->faker->imageUrl(300, 160, 'people', true),
         ];
     }
 }

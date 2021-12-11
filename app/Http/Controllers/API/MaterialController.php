@@ -16,7 +16,7 @@ class MaterialController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->paginate($request, Material::latest());
+        return $this->paginate($request, Material::select('id', 'banner', 'title')->latest());
     }
 
     /**
@@ -44,6 +44,7 @@ class MaterialController extends Controller
             if (count($userAnswers) > 0) {
                 $data['score'] = $userAnswers->sum('score');
             }
+            unset($data['quiz']);
         } catch (\Throwable $th) {
         }
         if ($data)

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Achievement extends Model
+class GameAnswer extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,7 +16,17 @@ class Achievement extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'image'];
+    protected $fillable = ['user_id', 'game_id', 'user_answer', 'user_time', 'score'];
+
+    public function game()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function getCreatedAtAttribute()
     {
