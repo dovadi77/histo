@@ -18,6 +18,7 @@ class CreateAchievementsTable extends Migration
             $table->string('name');
             $table->text('image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

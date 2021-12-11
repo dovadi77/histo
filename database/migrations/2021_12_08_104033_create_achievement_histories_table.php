@@ -18,6 +18,7 @@ class CreateAchievementHistoriesTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('achievement_id')->references('id')->on('achievements')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
