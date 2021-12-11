@@ -25,7 +25,7 @@ class Controller extends BaseController
         $response = [
             'success' => true,
             'message' => $message,
-            'data'    => new ArrayConverter($result),
+            'data'    => is_bool($result) ? $result : new ArrayConverter($result),
         ];
 
         return response()->json($response, 200);
@@ -99,5 +99,32 @@ class Controller extends BaseController
             ], 406);
         }
         return $validation->validated();
+    }
+
+    /**
+     * Paginate the query from database
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Model $query
+     * @return void
+     */
+    public function paginate($request, $query)
+    {
+        $limit = $request->query('limit') ?? 10;
+        $page = $request->query('page') ?? 1;
+        $offset = ($page - 1) * $limit;
+        $total = $query->count();
+        $totalPage = ceil($total / $limit);
+        $latest = $query->offset($offset)->limit($limit)->get();
+        $data = [
+            'metadata' => [
+                'data' => count($latest),
+                'page' => (int)$page,
+                'max_data' => $total,
+                'max_page' => $totalPage,
+            ],
+            'latest' => $latest
+        ];
+        return $this->sendResponse('Berhasil !', $data);
     }
 }

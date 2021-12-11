@@ -18,6 +18,7 @@ class CreateQuizTable extends Migration
             $table->foreignId('material_id')->references('id')->on('materials')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->longText('content');
+            $table->enum('type', ['voice', 'multiple']);
             $table->text('answer');
             $table->timestamps();
             $table->softDeletes();

@@ -17,6 +17,11 @@ class Material extends Model
      */
     protected $fillable = ['title', 'content', 'header_image'];
 
+    public function quiz()
+    {
+        return $this->hasOne(Quiz::class);
+    }
+
 
     public function getCreatedAtAttribute()
     {

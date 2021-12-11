@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class QuizHistory extends Model
+class QuizAnswer extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,11 @@ class QuizHistory extends Model
      * @var string[]
      */
     protected $fillable = ['user_id', 'quiz_id', 'user_answer', 'score'];
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
 
     public function getCreatedAtAttribute()
     {

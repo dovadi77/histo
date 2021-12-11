@@ -13,8 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\Achievement::factory(10)->create();
+        \App\Models\User::factory(10)->create();
+        \App\Models\Achievement::factory(10)->create();
         \App\Models\Material::factory(10)->create();
+        \App\Models\Quiz::factory(10)->create();
     }
 }

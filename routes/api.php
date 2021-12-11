@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AchievementController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MaterialController;
+use App\Http\Controllers\API\QuizController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,10 @@ Route::group(['prefix' => '/v1', 'as' => 'api.'], function () {
     Route::group(['prefix' => 'material', 'as' => 'material.'], function () {
         Route::get('', [MaterialController::class, 'index'])->name('index');
         Route::get('/{id}', [MaterialController::class, 'show'])->name('detail');
-        Route::group(['prefix' => 'quiz', 'as' => 'quiz.'], function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get('/{material}/quiz', [QuizController::class, 'indexMaterial'])->name('quiz.index');
+            Route::post('/{material}/quiz', [QuizController::class, 'storeMaterial'])->name('quiz.answer');
+            Route::put('/{material}/quiz', [QuizController::class, 'updateMaterial'])->name('quiz.answer.update');
         });
     });
 

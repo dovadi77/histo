@@ -10,12 +10,23 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    protected $table = 'quiz';
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $fillable = ['material_id', 'title', 'content', 'answer'];
+    protected $fillable = ['material_id', 'title', 'content', 'answer', 'type'];
+
+    public function answers()
+    {
+        return $this->hasMany(QuizAnswer::class);
+    }
+
+    public function material()
+    {
+        return $this->belongsTo(Material::class);
+    }
 
     public function getCreatedAtAttribute()
     {

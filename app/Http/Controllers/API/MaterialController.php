@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material;
-use App\Models\QuizHistory;
+use App\Models\QuizAnswer;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -14,9 +14,9 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->sendResponse('Berhasil !', Material::latest()->get());
+        return $this->paginate($request, Material::latest());
     }
 
     /**
@@ -40,7 +40,10 @@ class MaterialController extends Controller
     {
         $data = Material::find($id);
         try {
-            $data['score'] = QuizHistory::where('user_id', auth()->user()->id)->where('material_id', $id)->get()->sum('score');
+            $userAnswers = QuizAnswer::where('user_id', auth('sanctum')->user()->id)->where('quiz_id', $data->quiz->id)->get();
+            if (count($userAnswers) > 0) {
+                $data['score'] = $userAnswers->sum('score');
+            }
         } catch (\Throwable $th) {
         }
         if ($data)
