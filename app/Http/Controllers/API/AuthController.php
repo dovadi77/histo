@@ -26,7 +26,7 @@ class AuthController extends Controller
             /** @var \App\Models\MyUserModel $user */
             $user = Auth::user();
             $data = [
-                'token' => $user->createToken($user->name)->plainTextToken,
+                'token' => $user->createToken($user->username)->plainTextToken,
                 'user' => new ArrayConverter($user)
             ];
             return $this->sendResponse('Login sukses !', $data);
@@ -42,7 +42,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $input = $this->validationInput($request->all(), [
             'name' => 'nullable',
             'username' => 'required|alpha_num|unique:users,username',
             'email' => 'required|email|unique:users,email',
@@ -51,10 +51,10 @@ class AuthController extends Controller
             'image' => 'nullable|mimes:jpg,png,jpeg,svg|max:2048|dimensions:min_width=100,min_height=100',
             'confirm_password' => 'required|same:password',
         ]);
-        if ($validator->fails()) {
-            return $this->sendError('Cek data anda!', $validator->errors(), 406);
+
+        if (is_object($input)) {
+            return $input;
         }
-        $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         // save profile picture
         $input = $this->save_image($input, 'image', 'users/');
