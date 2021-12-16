@@ -26,6 +26,8 @@ Route::group(['prefix' => '/v1', 'as' => 'api.'], function () {
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/me', [UserController::class, 'index'])->name('detail');
+            Route::put('/me', [UserController::class, 'update'])->name('update');
+            Route::put('/change-pass', [AuthController::class, 'changePassword'])->name('change-pass');
         });
     });
     Route::group(['prefix' => 'achievement', 'as' => 'achievement.'], function () {

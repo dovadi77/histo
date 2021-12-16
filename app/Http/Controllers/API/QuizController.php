@@ -92,9 +92,9 @@ class QuizController extends Controller
         // calculate score
         $data['score'] = $this->calculateScore($data);
 
-        $res = $answer->update($data);
+        $answer->update($data);
 
-        return $this->sendResponse('Berhasil !', $res);
+        return $this->sendResponse('Berhasil !', $answer);
     }
 
     function calculateScore($data)

@@ -63,12 +63,28 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $this->validationInput($request->all(), [
+            'name' => 'nullable',
+            'username' => 'nullable|alpha_num|unique:users,username',
+            'image' => 'nullable|mimes:jpg,png,jpeg,svg|max:2048|dimensions:min_width=100,min_height=100,ratio=1',
+        ]);
+
+        if (is_object($input)) {
+            return $input;
+        }
+        // save profile picture
+        if (isset($input['image']))
+            $input = $this->save_image($input, 'image', 'users/');
+
+        // save input
+        $user = User::find(auth()->user()->id);
+        $user->update($input);
+
+        return $this->sendResponse('Data anda berhasil di-update', $user);
     }
 
     /**

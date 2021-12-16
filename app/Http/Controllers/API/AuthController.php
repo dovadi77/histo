@@ -46,9 +46,9 @@ class AuthController extends Controller
             'name' => 'nullable',
             'username' => 'required|alpha_num|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
             'mobile' => ['numeric', 'nullable', 'regex:/(^628|^08)/m'],
             'image' => 'nullable|mimes:jpg,png,jpeg,svg|max:2048|dimensions:min_width=100,min_height=100',
+            'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
 
@@ -68,35 +68,30 @@ class AuthController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the user password.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function changePassword(Request $request)
     {
-        //
-    }
+        $input = $this->validationInput($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if (is_object($input)) {
+            return $input;
+        }
+
+        // save password
+        $user = User::find(auth()->user()->id);
+        if (Hash::check($input['old_password'], $user['password'])) {
+            $input['password'] = Hash::make($input['password']);
+            $user->update($input);
+            return $this->sendResponse('Data anda berhasil di-update', $user);
+        }
+        return $this->sendError('Password lama dan baru tidak sesuai !', [], 406);
     }
 }
