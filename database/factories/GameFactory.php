@@ -14,6 +14,7 @@ class GameFactory extends Factory
     public function definition()
     {
         $type = ['voice', 'multiple', 'puzzle'];
+        $level = ['easy', 'medium', 'hard'];
         $i = rand(0, 2);
         if ($i == 1) {
             $content = '';
@@ -45,7 +46,7 @@ class GameFactory extends Factory
             'content' => $content,
             'answer' => $answer,
             'type' => $type[$i],
-            'contest' => 'single',
+            'level' => $level[rand(0, 2)],
             'max_time' => rand(8, 20)
         ];
     }

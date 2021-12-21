@@ -19,6 +19,7 @@ class CreateMaterialsTable extends Migration
             $table->string('title');
             $table->longText('content');
             $table->text('header');
+            $table->foreignId('parent_id');
             $table->timestamps();
             $table->softDeletes();
         });

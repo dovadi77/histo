@@ -18,7 +18,7 @@ class CreateGamesTable extends Migration
             $table->text('banner');
             $table->string('title');
             $table->text('content');
-            $table->enum('contest', ['single', 'versus']);
+            $table->enum('level', ['easy', 'medium', 'hard']);
             $table->enum('type', ['puzzle', 'voice', 'multiple']);
             $table->bigInteger('max_time');
             $table->text('answer');

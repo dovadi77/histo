@@ -24,6 +24,7 @@ class MaterialFactory extends Factory
             'content' => $post,
             'header' => $this->faker->imageUrl(800, 600, 'cats', true),
             'banner' => $this->faker->imageUrl(300, 160, 'people', true),
+            'parent_id' => rand(1, 3)
         ];
     }
 }

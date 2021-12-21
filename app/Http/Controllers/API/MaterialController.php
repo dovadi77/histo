@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +17,7 @@ class MaterialController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->paginate($request, Material::select('id', 'banner', 'title')->latest());
+        return $this->paginate($request, Material::select('id', 'banner', 'title')->where('parent_id', $request->query('id') ?? 0)->latest());
     }
 
     /**
