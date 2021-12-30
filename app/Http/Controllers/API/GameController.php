@@ -11,13 +11,19 @@ class GameController extends Controller
 {
     public function leaderboard(Request $request, $game)
     {
-        $order = Game::find($game)->type == 'puzzle' ? 'user_time' : 'score';
-        return $this->paginate($request, GameAnswer::where('game_id', $game)->orderBy($order, 'DESC')->with('user:id,name,username'));
+        $query = GameAnswer::where('game_id', $game)->orderBy('score', 'DESC');
+        return $this->paginate($request, $query->with('user:id,name,username'));
+    }
+
+    public function leaderboardLevel(Request $request)
+    {
+        $query = GameAnswer::join('games as g', 'game_answers.game_id', '=', 'g.id')->where('g.level', $request->query('level'))->orderBy('score', 'DESC')->selectRaw('game_answers.id, game_answers.user_id, SUM(game_answers.score) as score')->groupBy('game_answers.user_id', 'game_answers.id');
+        return $this->paginate($request, $query->with('user:id,name,username'));
     }
 
     public function index(Request $request)
     {
-        return $this->paginate($request, Game::select('id', 'banner', 'title')->latest());
+        return $this->paginate($request, Game::where('level', $request->query('level'))->select('id', 'banner', 'title')->latest());
     }
 
     public function show($game)
@@ -73,9 +79,6 @@ class GameController extends Controller
     function calculateScore($data, $id)
     {
         $game = Game::find($id);
-        if ($game['type'] == 'puzzle') {
-            return 100;
-        }
         $timePenalty = 0;
         switch ((int)(((($data['user_time'] / $game['max_time']) * 100) - 1) / 20)) {
             case 0:

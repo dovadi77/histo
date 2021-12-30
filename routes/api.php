@@ -48,6 +48,7 @@ Route::group(['prefix' => '/v1', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'game', 'as' => 'game.'], function () {
         Route::get('/', [GameController::class, 'index'])->name('index');
+        Route::get('/leaderboard', [GameController::class, 'leaderboardLevel'])->name('level.leaderboard');
         Route::get('/{game}/leaderboard', [GameController::class, 'leaderboard'])->name('leaderboard');
         Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/{game}', [GameController::class, 'show'])->name('detail');
