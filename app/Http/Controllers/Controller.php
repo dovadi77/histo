@@ -108,7 +108,7 @@ class Controller extends BaseController
      * @param \Illuminate\Database\Eloquent\Model $query
      * @return void
      */
-    public function paginate($request, $query)
+    public function paginate($request, $query, $moreData = null)
     {
         $limit = $request->query('limit') ?? 10;
         $page = $request->query('page') ?? 1;
@@ -123,7 +123,8 @@ class Controller extends BaseController
                 'max_data' => $total,
                 'max_page' => $totalPage,
             ],
-            'latest' => $latest
+            'latest' => $latest,
+            'additional' => $moreData
         ];
         return $this->sendResponse('Berhasil !', $data);
     }
