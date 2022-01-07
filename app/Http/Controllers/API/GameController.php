@@ -23,7 +23,7 @@ class GameController extends Controller
 
     public function index(Request $request)
     {
-        return $this->paginate($request, Game::where('level', $request->query('level'))->select('id', 'banner', 'title')->latest());
+        return $this->paginate($request, Game::where('level', $request->query('level'))->where('active', true)->select('id', 'banner', 'title')->latest());
     }
 
     public function show($game)

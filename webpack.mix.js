@@ -1,6 +1,5 @@
 const mix = require("laravel-mix");
 
-const path = require("path");
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,7 +11,7 @@ const path = require("path");
  |
  */
 
-mix.sass("resources/sass/app.scss", "public/css")
-    .postCss("resources/css/sb-admin.css", "public/css/style.css")
-    .postCss("resources/css/auth.css", "public/css/auth.css")
-    .js("resources/js/app.js", "public/js");
+mix.js("resources/js/app.js", "public/js")
+    .postCss("resources/css/app.css", "public/css")
+    .postCss("resources/css/admin.css", "public/css/admin.css")
+    .postCss("resources/css/auth.css", "public/css/auth.css");

@@ -1,7 +1,6 @@
 {
-    "/js/mix.js": "/js/mix.js",
     "/js/app.js": "/js/app.js",
-    "/js/datatables.js": "/js/datatables.js",
-    "/css/style.css": "/css/style.css",
-    "/css/app.css": "/css/app.css"
+    "/css/admin.css": "/css/admin.css",
+    "/css/app.css": "/css/app.css",
+    "/css/auth.css": "/css/auth.css"
 }

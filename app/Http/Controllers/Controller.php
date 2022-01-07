@@ -65,7 +65,7 @@ class Controller extends BaseController
             $ext = str_replace('image/', '', $input[$image]->getClientMimeType());
 
             // create name
-            $random = md5($input['name'] ?? $input['username'] . Str::random(10));
+            $random = md5(Str::random(10));
             $imgName = $random . "." . $ext;
 
             // upload file to storage

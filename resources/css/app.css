@@ -1,0 +1,7 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.pos {
+    width: calc(100% - 5em);
+    height: calc(100% - 1em);
+    margin: auto;
+}

@@ -17,7 +17,7 @@ class MaterialController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->paginate($request, Material::select('id', 'banner', 'title')->where('parent_id', $request->query('id') ?? 0)->latest());
+        return $this->paginate($request, Material::select('id', 'banner', 'title')->where('parent_id', $request->query('id') ?? 0)->where('active', true)->latest());
     }
 
     /**

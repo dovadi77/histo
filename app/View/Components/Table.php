@@ -6,17 +6,19 @@ use Illuminate\View\Component;
 
 class Table extends Component
 {
-    public $rows, $thead, $componentID;
+    public $rows, $thead, $componentID, $edit, $delete;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($componentID, $rows)
+    public function __construct($componentID, $rows, $edit, $delete)
     {
         $this->componentID = $componentID;
         $this->thead = array_keys($rows[0]);
         $this->rows = $rows;
+        $this->edit = $edit;
+        $this->delete = $delete;
     }
 
     /**

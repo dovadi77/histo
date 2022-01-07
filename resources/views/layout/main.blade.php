@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <!-- CSS -->
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <!-- Font Awesome-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    @yield('title')
+    <title>@yield('title')</title>
+    <link href="/css/app.css" rel="stylesheet" />
+    <link href="/css/admin.css" rel="stylesheet" />
+    @yield('custom_styles')
 </head>
 
 <body class="sb-nav-fixed">
@@ -22,12 +20,11 @@
         <x-sidebar></x-sidebar>
         <div id="layoutSidenav_content">
             <main>
-                @yield('data')
+                @yield('content')
             </main>
         </div>
     </section>
-    <script src="js/app.js"></script>
-    <script src="js/datatables.js"></script>
+    <script src="/js/app.js"></script>
     @yield('custom_scripts')
 </body>
 

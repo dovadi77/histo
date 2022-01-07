@@ -16,13 +16,17 @@ class Material extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['banner', 'title', 'content', 'header_image'];
+    protected $fillable = ['banner', 'title', 'content', 'header', 'parent_id', 'active'];
 
     public function quiz()
     {
         return $this->hasOne(Quiz::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Material::class, 'parent_id');
+    }
 
     public function getCreatedAtAttribute()
     {

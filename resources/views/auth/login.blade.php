@@ -11,7 +11,7 @@
         @endif
         <form action="{{ route('auth.login') }}" method="POST">
             @csrf
-            <h1>{{ setting('app_name') }}</h1>
+            <h1>Histo Dashboard</h1>
             <h3 class="h3 mb-3 fw-normal">Silahkan masuk</h3>
 
             <div class="form-floating">
@@ -27,7 +27,7 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">
                 Sign in
             </button>
-            <p class="mt-5 mb-3 text-muted">Make with 💖 DovadiTech</p>
+            <p class="mt-5 mb-3 text-muted">Make with 💖 Histo Team</p>
         </form>
     </main>
 @endsection

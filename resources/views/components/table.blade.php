@@ -10,13 +10,17 @@
         </thead>
         <tbody>
             <?php $i = 1; ?>
-            {{-- {{ dd($thead) }} --}}
             @foreach ($rows as $td)
                 <tr>
                     <td>{{ $i }}</td>
                     @foreach ($thead as $th)
                         <td>{{ $td[$th] }}</td>
                     @endforeach
+                    @if ($edit)
+                        <td>
+                            <a class="btn btn-primary" href="{{ $edit . '/' . $td }}"><i class="fas fa-edit"></i></a>
+                        </td>
+                    @endif
                 </tr>
                 <?php $i += 1; ?>
             @endforeach
