@@ -27,6 +27,7 @@ Route::name('dash.')->group(function () {
         Route::post('/material/add', [MaterialController::class, 'store'])->name('material.add');
         Route::get('/material/edit/{material}', [MaterialController::class, 'edit'])->name('material.edit');
         Route::post('/material/edit/{material}', [MaterialController::class, 'update'])->name('material.update');
+        Route::post('/material/delete/{material}', [MaterialController::class, 'destroy'])->name('material.delete');
     });
 });
 

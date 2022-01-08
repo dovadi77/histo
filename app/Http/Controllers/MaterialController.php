@@ -15,7 +15,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        return view('material.index', ['materials' => Material::orderBy('parent_id')->orderBy('updated_at', 'DESC')->get(['id', 'title', 'created_at', 'updated_at', 'parent_id'])->toArray()]);
+        return view('material.index', ['materials' => Material::leftJoin('quiz as q', 'materials.id', '=', 'q.material_id')->orderBy('materials.parent_id')->orderBy('materials.updated_at', 'DESC')->get(['materials.id', 'materials.title', 'materials.created_at', 'materials.updated_at', 'materials.parent_id', 'q.type'])->toArray()]);
     }
 
     /**
@@ -146,7 +146,7 @@ class MaterialController extends Controller
             if (array_key_exists('header', $input))
                 $input = $this->save_image($input, 'header', 'material/');
 
-            $input['parent_id'] = $input['parent'];
+            $input['parent_id'] = $input['parent'] ?? 0;
 
             $material->update($input);
 
@@ -183,7 +183,6 @@ class MaterialController extends Controller
             }
             return back()->with(['success' => 'Berhasil mengubah Material !']);
         } catch (\Throwable $th) {
-            dd($th);
             return back()->with(['error' => 'Terjadi kesalahan pada sistem !' . (env('APP_ENV') == 'production' ? '' : $th)]);
         }
     }
@@ -196,6 +195,11 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
-        //
+        try {
+            $material->delete();
+            return back()->with(['success' => 'Berhasil menghapus Material !']);
+        } catch (\Throwable $th) {
+            return back()->with(['error' => 'Terjadi kesalahan pada sistem !' . (env('APP_ENV') == 'production' ? '' : $th)]);
+        }
     }
 }

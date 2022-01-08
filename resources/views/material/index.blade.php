@@ -16,7 +16,8 @@
                 Material
             </div>
             <div class="card-body">
-                <x-table componentID="materialTable" :rows="$materials" edit="/historian/material/edit" delete="#" />
+                <x-table componentID="materialTable" :rows="$materials" edit="/historian/material/edit"
+                    delete="/historian/material/delete" />
             </div>
         </div>
     </div>
