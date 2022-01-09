@@ -163,7 +163,7 @@ class GameController extends Controller
             ]));
             return back()->with(['success' => 'Berhasil mengubah game !']);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             return back()->with(['error' => 'Terjadi kesalahan pada sistem !' . (env('APP_ENV') == 'production' ? '' : $th)]);
         }
     }
