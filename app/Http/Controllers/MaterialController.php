@@ -15,7 +15,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        return view('material.index', ['materials' => Material::leftJoin('quiz as q', 'materials.id', '=', 'q.material_id')->orderBy('materials.parent_id')->orderBy('materials.updated_at', 'DESC')->get(['materials.id', 'materials.title', 'materials.created_at', 'materials.updated_at', 'materials.parent_id', 'q.type'])->toArray()]);
+        return view('material.index', ['materials' => Material::leftJoin('quiz as q', 'materials.id', '=', 'q.material_id')->orderBy('materials.parent_id')->orderBy('materials.updated_at', 'DESC')->get(['materials.id', 'materials.title', 'active', 'materials.parent_id', 'q.type', 'materials.created_at', 'materials.updated_at'])->toArray()]);
     }
 
     /**
@@ -36,22 +36,23 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'banner' => 'required|mimes:jpg,png,jpeg,svg',
+            'header' => 'required|mimes:jpg,png,jpeg,svg',
+            'content' => 'required',
+            'isParent' => 'required',
+            'parent' => 'numeric',
+            'active' => 'required',
+        ]);
         try {
-            $request->validate([
-                'title' => 'required',
-                'banner' => 'required|mimes:jpg,png,jpeg,svg',
-                'header' => 'required|mimes:jpg,png,jpeg,svg',
-                'content' => 'required',
-                'isParent' => 'required',
-                'parent' => 'numeric',
-                'active' => 'required',
-            ]);
             $input = $request->all();
             // save banner picture
             $input = $this->save_image($input, 'banner', 'material/');
             // save header picture
             $input = $this->save_image($input, 'header', 'material/');
 
+            $input['active'] = $input['active'] == '1';
             $input['parent_id'] = $input['parent'] ?? 0;
 
             $material = Material::create($input);
@@ -129,15 +130,15 @@ class MaterialController extends Controller
      */
     public function update(Request $request, Material $material)
     {
+        $request->validate([
+            'title' => 'required',
+            'banner' => 'mimes:jpg,png,jpeg,svg',
+            'header' => 'mimes:jpg,png,jpeg,svg',
+            'content' => 'required',
+            'parent' => 'numeric',
+            'active' => 'required',
+        ]);
         try {
-            $request->validate([
-                'title' => 'required',
-                'banner' => 'mimes:jpg,png,jpeg,svg',
-                'header' => 'mimes:jpg,png,jpeg,svg',
-                'content' => 'required',
-                'parent' => 'numeric',
-                'active' => 'required',
-            ]);
             $input = $request->all();
             // save banner picture
             if (array_key_exists('banner', $input))
@@ -146,6 +147,7 @@ class MaterialController extends Controller
             if (array_key_exists('header', $input))
                 $input = $this->save_image($input, 'header', 'material/');
 
+            $input['active'] = $input['active'] == '1';
             $input['parent_id'] = $input['parent'] ?? 0;
 
             $material->update($input);
@@ -160,8 +162,6 @@ class MaterialController extends Controller
                     ];
                 } else {
                     $content = "";
-                    array_pop($input['questions']);
-                    array_pop($input['answers']);
                     for ($i = 0; $i < count($input['questions']); $i++) {
                         $content .= $input['questions'][$i] . ";";
                         for ($j = $i * 4; $j < ($i + 1) * 4; $j++) {

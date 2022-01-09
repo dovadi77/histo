@@ -62,7 +62,6 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <td>#</td>
                                             <th>Question</th>
                                             <th>Answer</th>
                                             <th>Correct Answer</th>
@@ -129,30 +128,30 @@
         @include('components.alert');
     @endif
     <script>
-        let isParent = document.querySelector("#parent");
-        let multiple = document.querySelector('#multiple');
-        let voice = document.querySelector('#voice');
-        let tBodyMul = multiple.querySelector('table > tbody');
-        let tBodyVoi = voice.querySelector('table > tbody');
-        let quiz = document.querySelector('#quiz');
+        // let isParent = document.querySelector("#parent");
+        // let multiple = document.querySelector('#multiple');
+        // let voice = document.querySelector('#voice');
+        // let tBodyMul = multiple.querySelector('table > tbody');
+        // let tBodyVoi = voice.querySelector('table > tbody');
+        // let quiz = document.querySelector('#quiz');
 
-        isParent.addEventListener('change', (e) => {
-            if (isParent.value === '0') {
-                document.querySelector('#parentContainer').hidden = false;
-                document.querySelector('#quizContainer').hidden = false;
-            } else {
-                document.querySelector('#parentContainer').hidden = true;
-                document.querySelector('#quizContainer').hidden = true;
-            }
-        });
-        quiz.addEventListener('change', (e) => {
-            if (quiz.value === 'voice') {
-                multiple.hidden = true;
-                voice.hidden = false;
-            } else {
-                multiple.hidden = false;
-                voice.hidden = true;
-            }
-        });
+        // isParent.addEventListener('change', (e) => {
+        //     if (isParent.value === '0') {
+        //         document.querySelector('#parentContainer').hidden = false;
+        //         document.querySelector('#quizContainer').hidden = false;
+        //     } else {
+        //         document.querySelector('#parentContainer').hidden = true;
+        //         document.querySelector('#quizContainer').hidden = true;
+        //     }
+        // });
+        // quiz.addEventListener('change', (e) => {
+        //     if (quiz.value === 'voice') {
+        //         multiple.hidden = true;
+        //         voice.hidden = false;
+        //     } else {
+        //         multiple.hidden = false;
+        //         voice.hidden = true;
+        //     }
+        // });
     </script>
 @endsection
