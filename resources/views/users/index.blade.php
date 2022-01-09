@@ -1,7 +1,5 @@
 @extends('layout.main')
-@section('title')
-    <x-title title="List Users" />
-@endsection
+@section('title' . 'User')
 @section('data')
     <div class="container-fluid px-4">
         <h1 class="mt-4">List Users</h1>
