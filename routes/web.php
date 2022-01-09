@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\MaterialController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +23,22 @@ Route::get('/', function () {
 Route::name('dash.')->group(function () {
     Route::group(['middleware' => ["auth"], "prefix" => "historian"], function () {
         Route::get('/', [AuthController::class, 'index'])->name('dashboard');
-        Route::get('/material', [MaterialController::class, 'index'])->name('material.index');
-        Route::get('/material/add', [MaterialController::class, 'create'])->name('material.create');
-        Route::post('/material/add', [MaterialController::class, 'store'])->name('material.add');
-        Route::get('/material/edit/{material}', [MaterialController::class, 'edit'])->name('material.edit');
-        Route::post('/material/edit/{material}', [MaterialController::class, 'update'])->name('material.update');
-        Route::post('/material/delete/{material}', [MaterialController::class, 'destroy'])->name('material.delete');
+        Route::group(["prefix" => "material", 'as' => 'material.'], function () {
+            Route::get('', [MaterialController::class, 'index'])->name('index');
+            Route::get('/add', [MaterialController::class, 'create'])->name('create');
+            Route::post('/add', [MaterialController::class, 'store'])->name('add');
+            Route::get('/edit/{material}', [MaterialController::class, 'edit'])->name('edit');
+            Route::post('/edit/{material}', [MaterialController::class, 'update'])->name('update');
+            Route::post('/delete/{material}', [MaterialController::class, 'destroy'])->name('delete');
+        });
+        Route::group(["prefix" => "game", 'as' => 'game.'], function () {
+            Route::get('', [GameController::class, 'index'])->name('index');
+            Route::get('/add', [GameController::class, 'create'])->name('create');
+            Route::post('/add', [GameController::class, 'store'])->name('add');
+            Route::get('/edit/{game}', [GameController::class, 'edit'])->name('edit');
+            Route::post('/edit/{game}', [GameController::class, 'update'])->name('update');
+            Route::post('/delete/{game}', [GameController::class, 'destroy'])->name('delete');
+        });
     });
 });
 
