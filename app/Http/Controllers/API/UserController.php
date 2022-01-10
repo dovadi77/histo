@@ -70,7 +70,7 @@ class UserController extends Controller
         $input = $this->validationInput($request->all(), [
             'name' => 'nullable',
             'username' => 'nullable|alpha_num|unique:users,username',
-            'image' => 'nullable|mimes:jpg,png,jpeg,svg|max:2048|dimensions:min_width=100,min_height=100',
+            'image' => 'nullable|mimes:jpg,png,jpeg,svg|max:4096|dimensions:min_width=100,min_height=100',
         ]);
 
         if (is_object($input)) {
