@@ -106,7 +106,7 @@ class GameController extends Controller
             $correctWord = 0;
             foreach ($answers as $key => $val) {
                 try {
-                    $userAnswer = $userAnswers[$key];
+                    $userAnswer = strtolower($userAnswers[$key]);
                     $val = preg_replace('/[[:punct:]]/', '', $val);
                     $ans = preg_replace('/[[:punct:]]/', '',  $userAnswer);
                     if ($val == $ans)
