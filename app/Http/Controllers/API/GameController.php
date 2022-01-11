@@ -82,7 +82,7 @@ class GameController extends Controller
     {
         $game = Game::find($id);
         $timePenalty = 0;
-        switch ((int)((($data['user_time'] / $game['max_time']) * 100) - 1) / 20) {
+        switch ((int)(((($data['user_time'] / $game['max_time']) * 100) - 1) / 20)) {
             case 0:
                 $timePenalty = 0;
                 break;
