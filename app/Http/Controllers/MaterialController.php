@@ -64,7 +64,7 @@ class MaterialController extends Controller
                 if ($input['quiz'] == 'voice') {
                     $data = [
                         'title' => $input['quiz_title'],
-                        'content' => $input['popup'] . "|" . $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
+                        'content' => $input['popup'] . "|" . ($input['questions'][0] ? $input['questions'][0] : $input['questions'][1]),
                         'answer' => $input['answers'][0] ? $input['answers'][0] : $input['answers'][1],
                         'material_id' => $material->id,
                         'type' => $input['quiz']
@@ -156,7 +156,7 @@ class MaterialController extends Controller
                 if ($material->quiz->type == 'voice') {
                     $data = [
                         'title' => $input['quiz_title'],
-                        'content' => $input['popup'] . "|" . $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
+                        'content' => $input['popup'] . "|" . ($input['questions'][0] ? $input['questions'][0] : $input['questions'][1]),
                         'answer' => $input['answers'][0] ? $input['answers'][0] : $input['answers'][1],
                         'material_id' => $material->id
                     ];
