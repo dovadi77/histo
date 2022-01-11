@@ -16,7 +16,7 @@ class Game extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['banner', 'title', 'content', 'contest', 'type', 'max_time', 'answer', 'active'];
+    protected $fillable = ['banner', 'title', 'content', 'contest', 'type', 'max_time', 'answer', 'active', 'level'];
 
     public function answers()
     {
