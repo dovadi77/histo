@@ -43,6 +43,8 @@ class GameController extends Controller
             } else if ($data['type'] == 'puzzle') {
                 $arr = explode(';', $data['content']);
                 $data['content'] = ['question' => $arr[0], 'puzzles' => array_slice($arr, 1, count($arr))];
+            } else {
+                $data['content'] = explode('|', $data['content']);
             }
             $data['user_answer'] = $data['answers'][0] ?? null;
             unset($data['answers']);
@@ -80,7 +82,7 @@ class GameController extends Controller
     {
         $game = Game::find($id);
         $timePenalty = 0;
-        switch ((int)(((($data['user_time'] / $game['max_time']) * 100) - 1) / 20)) {
+        switch ((int)((($data['user_time'] / $game['max_time']) * 100) - 1) / 20) {
             case 0:
                 $timePenalty = 0;
                 break;
@@ -107,6 +109,7 @@ class GameController extends Controller
             foreach ($answers as $key => $val) {
                 try {
                     $userAnswer = strtolower($userAnswers[$key]);
+                    $val = strtolower($val);
                     $val = preg_replace('/[[:punct:]]/', '', $val);
                     $ans = preg_replace('/[[:punct:]]/', '',  $userAnswer);
                     if ($val == $ans)

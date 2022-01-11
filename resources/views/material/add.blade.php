@@ -100,6 +100,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Pertanyaan</th>
                                     <th>Kata - kata Popup</th>
                                     <th>Kata yang harus diucapkan</th>
                                 </tr>
@@ -107,6 +108,7 @@
                             <tbody>
                                 <tr>
                                     <td><input class="form-control" type="text" name="questions[]" /></td>
+                                    <td><input class="form-control" type="text" name="popup" /></td>
                                     <td><input class="form-control" type="text" name="answers[]"></td>
                                 </tr>
                             </tbody>

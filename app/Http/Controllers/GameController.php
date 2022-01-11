@@ -51,7 +51,7 @@ class GameController extends Controller
 
             if ($input['game'] == 'voice') {
                 $data = [
-                    'content' => $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
+                    'content' => $input['popup'] . "|" . $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
                     'answer' => $input['answers'][0] ? $input['answers'][0] : $input['answers'][1],
                 ];
             } else {
@@ -135,7 +135,7 @@ class GameController extends Controller
 
             if ($game['type'] == 'voice') {
                 $data = [
-                    'content' => $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
+                    'content' => $input['popup'] . "|" . $input['questions'][0] ? $input['questions'][0] : $input['questions'][1],
                     'answer' => $input['answers'][0] ? $input['answers'][0] : $input['answers'][1],
                 ];
             } else {

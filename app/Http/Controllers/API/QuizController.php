@@ -29,6 +29,8 @@ class QuizController extends Controller
                     $questions[$i] = ['question' => $arr[0], 'choices' => array_slice($arr, 1, count($arr))];
                 }
                 $data['content'] = $questions;
+            } else {
+                $data['content'] = explode('|', $data['content']);
             }
             $data['user_answer'] = $data['answers'][0] ?? null;
             unset($data['answers']);

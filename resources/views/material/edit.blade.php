@@ -98,14 +98,18 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Pertanyaan</th>
                                             <th>Kata - kata Popup</th>
                                             <th>Kata yang harus diucapkan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <?php $content = explode('|', $material->quiz->content); ?>
                                             <td><input class="form-control" type="text" name="questions[]"
-                                                    value="{{ $material->quiz->content }}" /></td>
+                                                    value="{{ $content[1] }}" /></td>
+                                            <td><input class="form-control" type="text" name="popup"
+                                                    value="{{ $content[0] }}" /></td>
                                             <td><input class="form-control" type="text" name="answers[]"
                                                     value="{{ $material->quiz->answer }}"></td>
                                         </tr>
@@ -127,31 +131,4 @@
     @if (Session::has('success') || Session::has('error'))
         @include('components.alert');
     @endif
-    <script>
-        // let isParent = document.querySelector("#parent");
-        // let multiple = document.querySelector('#multiple');
-        // let voice = document.querySelector('#voice');
-        // let tBodyMul = multiple.querySelector('table > tbody');
-        // let tBodyVoi = voice.querySelector('table > tbody');
-        // let quiz = document.querySelector('#quiz');
-
-        // isParent.addEventListener('change', (e) => {
-        //     if (isParent.value === '0') {
-        //         document.querySelector('#parentContainer').hidden = false;
-        //         document.querySelector('#quizContainer').hidden = false;
-        //     } else {
-        //         document.querySelector('#parentContainer').hidden = true;
-        //         document.querySelector('#quizContainer').hidden = true;
-        //     }
-        // });
-        // quiz.addEventListener('change', (e) => {
-        //     if (quiz.value === 'voice') {
-        //         multiple.hidden = true;
-        //         voice.hidden = false;
-        //     } else {
-        //         multiple.hidden = false;
-        //         voice.hidden = true;
-        //     }
-        // });
-    </script>
 @endsection
