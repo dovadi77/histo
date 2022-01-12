@@ -90,9 +90,9 @@
                                     <tr>
                                         <?php $content = explode('|', $game->content); ?>
                                         <td><input class="form-control" type="text" name="questions[]"
-                                                value="{{ $content[1] }}" /></td>
+                                                value="{{ $content[1] ?? '' }}" /></td>
                                         <td><input class="form-control" type="text" name="popup"
-                                                value="{{ $content[0] }}" /></td>
+                                                value="{{ $content[0] ?? '' }}" /></td>
                                         <td><input class="form-control" type="text" name="answers[]"
                                                 value="{{ $game->answer }}"></td>
                                     </tr>
