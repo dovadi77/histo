@@ -109,6 +109,7 @@ class QuizController extends Controller
             foreach ($answers as $key => $val) {
                 try {
                     $userAnswer = strtolower($userAnswers[$key]);
+                    $val = strtolower($val);
                     $val = preg_replace('/[[:punct:]]/', '', $val);
                     $ans = preg_replace('/[[:punct:]]/', '',  $userAnswer);
                     if ($val == $ans)
