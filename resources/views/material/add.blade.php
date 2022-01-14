@@ -18,7 +18,7 @@
                 <x-input id="header" name="header" label="Header" type="file" />
                 <div class="mb-3">
                     <label for="content" class="form-label">Konten</label>
-                    <textarea class="form-control" id="content" rows="5" name="content"></textarea>
+                    <textarea class="form-control" id="content" rows="3" name="content"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="parent" class="form-label">Apakah Parent</label>
