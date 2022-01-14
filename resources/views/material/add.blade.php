@@ -1,5 +1,8 @@
 @extends('layout.main')
 @section('title', 'Material')
+@section('custom_styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+@endsection
 @section('content')
     <div class="container-fluid px-4">
         <h1 class="mt-4">Material</h1>
@@ -13,7 +16,10 @@
                 <x-input id="title" name="title" label="Judul" type="text" />
                 <x-input id="banner" name="banner" label="Banner" type="file" />
                 <x-input id="header" name="header" label="Header" type="file" />
-                <x-input id="content" name="content" label="Konten" type="text" />
+                <div class="mb-3">
+                    <label for="content" class="form-label">Konten</label>
+                    <textarea class="form-control" id="content" rows="5" name="content"></textarea>
+                </div>
                 <div class="mb-3">
                     <label for="parent" class="form-label">Apakah Parent</label>
                     <select class="form-control text-uppercase" id="parent" aria-errormessage="parentError" name="isParent">
@@ -127,6 +133,30 @@
     @if (Session::has('success') || Session::has('error'))
         @include('components.alert');
     @endif
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script>
+        let simplemde = new SimpleMDE({
+            element: document.getElementById("content"),
+            forceSync: true,
+            insertTexts: {
+                horizontalRule: ["", "\n\n-----\n\n"],
+                image: ["![](http://", ")"],
+                link: ["[", "](http://)"],
+                table: ["",
+                    "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"
+                ],
+            },
+            promptURLs: true,
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+            shortcuts: {
+                drawTable: "Cmd-Alt-T"
+            },
+            showIcons: ["code", "table"],
+        });
+    </script>
     <script>
         let isParent = document.querySelector("#parent");
         let multiple = document.querySelector('#multiple');
