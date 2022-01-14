@@ -143,7 +143,6 @@
         let simplemde = new SimpleMDE({
             element: document.getElementById("content"),
             spellChecker: false,
-            lineWrapping: false,
             forceSync: true
         });
     </script>
