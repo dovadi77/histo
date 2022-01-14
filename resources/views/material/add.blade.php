@@ -137,24 +137,9 @@
     <script>
         let simplemde = new SimpleMDE({
             element: document.getElementById("content"),
-            forceSync: true,
-            insertTexts: {
-                horizontalRule: ["", "\n\n-----\n\n"],
-                image: ["![](http://", ")"],
-                link: ["[", "](http://)"],
-                table: ["",
-                    "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"
-                ],
-            },
-            promptURLs: true,
-            renderingConfig: {
-                singleLineBreaks: false,
-                codeSyntaxHighlighting: true,
-            },
-            shortcuts: {
-                drawTable: "Cmd-Alt-T"
-            },
-            showIcons: ["code", "table"],
+            spellChecker: false,
+            lineWrapping: false,
+            forceSync: true
         });
     </script>
     <script>
