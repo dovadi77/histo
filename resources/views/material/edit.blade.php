@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('title', 'Material')
 @section('custom_styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 @endsection
 @section('content')
     <div class="container-fluid px-4">
@@ -138,9 +138,9 @@
     @if (Session::has('success') || Session::has('error'))
         @include('components.alert');
     @endif
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script>
-        let simplemde = new SimpleMDE({
+        const easyMDE = new EasyMDE({
             element: document.getElementById("content"),
             spellChecker: false,
             forceSync: true
