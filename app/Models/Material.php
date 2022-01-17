@@ -16,7 +16,7 @@ class Material extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['banner', 'title', 'content', 'header', 'parent_id', 'active'];
+    protected $fillable = ['banner', 'title', 'content', 'header', 'parent_id', 'active', 'order'];
 
     public function quiz()
     {
