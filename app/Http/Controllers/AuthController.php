@@ -23,9 +23,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect(route('dash.dashboard'));
+            if (Auth::user()->role === 'admin') {
+                $request->session()->regenerate();
+                return redirect(route('dash.dashboard'));
+            }
         }
 
         return back()->withErrors(['msg' => __('auth.failed')]);
