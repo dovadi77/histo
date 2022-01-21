@@ -6,7 +6,9 @@
                 @foreach ($thead as $th)
                     <th>{{ ucwords($th) }}</th>
                 @endforeach
-                <th colspan="2">Action</th>
+                @if ($edit || $delete)
+                    <th colspan="2">Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>

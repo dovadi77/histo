@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::name('dash.')->group(function () {
             Route::post('/edit/{game}', [GameController::class, 'update'])->name('update');
             Route::post('/delete/{game}', [GameController::class, 'destroy'])->name('delete');
         });
+        Route::get('/users/', [UserController::class, 'index'])->name('users.index');
     });
 });
 

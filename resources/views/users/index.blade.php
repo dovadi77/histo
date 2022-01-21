@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title' . 'User')
-@section('data')
+@section('content')
     <div class="container-fluid px-4">
         <h1 class="mt-4">List Users</h1>
         <ol class="breadcrumb mb-4">
@@ -19,6 +19,6 @@
 @endsection
 @section('custom_scripts')
     <script>
-        let table = DataTable.initTable('usersTable');
+        const table = initTable('usersTable');
     </script>
 @endsection

@@ -12,7 +12,7 @@ class Table extends Component
      *
      * @return void
      */
-    public function __construct($componentID, $rows, $edit, $delete)
+    public function __construct($componentID, $rows, $edit = null, $delete = null)
     {
         $this->componentID = $componentID;
         $this->thead = array_keys($rows[0]);
