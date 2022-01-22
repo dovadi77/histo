@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index', ['users' => User::all(['id as ID', 'name', 'email', 'created_at as created', 'updated_at as last update'])->toArray()]);
+        return view('users.index', ['users' => User::all(['id as ID', 'name', 'username', 'email', 'created_at as created', 'updated_at as last update'])->toArray()]);
     }
 
     /**
