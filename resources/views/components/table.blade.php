@@ -27,7 +27,9 @@
                     @endif
                     @if ($delete)
                         <td>
-                            <form action="{{ $delete . '/' . $td['id'] }}" method="post">
+                            <form
+                                onsubmit="return confirm('Apakah anda ingin menghapus data `{{ $td['title'] }}` ?');"
+                                action="{{ $delete . '/' . $td['id'] }}" method="post">
                                 @csrf
                                 <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                             </form>
