@@ -17,7 +17,7 @@ class GameController extends Controller
 
     public function leaderboardLevel(Request $request)
     {
-        $query = GameAnswer::join('games as g', 'game_answers.game_id', '=', 'g.id')->where('g.level', $request->query('level'))->orderBy('score', 'DESC')->orderBy('user_time', 'ASC')->selectRaw('game_answers.user_id, SUM(game_answers.score) as score')->groupBy('game_answers.user_id');
+        $query = GameAnswer::join('games as g', 'game_answers.game_id', '=', 'g.id')->where('g.level', $request->query('level'))->orderBy('score', 'DESC')->selectRaw('game_answers.user_id, SUM(game_answers.score) as score')->groupBy('game_answers.user_id');
         return $this->paginate($request, $query->with('user:id,name,username,image'), $this->getRanking($query));
     }
 
